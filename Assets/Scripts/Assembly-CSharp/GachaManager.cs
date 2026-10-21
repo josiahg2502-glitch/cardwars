@@ -32,7 +32,7 @@ public class GachaManager : ILoadable
 
 		public string Pick()
 		{
-			int rnum = UnityEngine.Random.Range(1, totalWeight);
+			int rnum = UnityEngine.Random.Range(1, totalWeight + 1);
 			GachaWeightPair gachaWeightPair = weights.Find((GachaWeightPair p) => rnum <= p.weight);
 			if (gachaWeightPair == null)
 			{
@@ -72,6 +72,8 @@ public class GachaManager : ILoadable
 	private List<GachaScheme> schemes;
 
 	private Dictionary<string, PartyInfo> parties;
+
+	private TimeSpan replayOffset;
 
 	private GachaWeightTable currNormalWeights;
 
@@ -245,6 +247,14 @@ public class GachaManager : ILoadable
 			return null;
 		}
 		DateTime now = TFUtils.ServerTime;
+		replayOffset = TimeSpan.Zero;
+		// Carnival dates were only authored through Jan 2025; after that, replay the 2024 calendar every year
+		if (now.Year > 2025 || (now.Year == 2025 && now.Month > 1))
+		{
+			DateTime replay = new DateTime(now.Month == 1 ? 2025 : 2024, now.Month, now.Day, 0, 0, 0, now.Kind) + now.TimeOfDay;
+			replayOffset = now - replay;
+			now = replay;
+		}
 		return schemes.Find((GachaScheme s) => forPremiumChest == s.isPremium && now >= s.start && now <= s.end);
 	}
 
@@ -503,7 +513,7 @@ public class GachaManager : ILoadable
 				return null;
 			}
 			PartyInfo partyInfo = parties[currentScheme.party];
-			partyInfo.end = currentScheme.end;
+			partyInfo.end = ((currentScheme.end == DateTime.MaxValue) ? currentScheme.end : (currentScheme.end + replayOffset));
 			return partyInfo;
 		}
 		return null;

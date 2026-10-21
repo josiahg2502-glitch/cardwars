@@ -46,11 +46,28 @@ public class ScheduleData
 		{
 			return true;
 		}
+		int yearCurr = new DateTime(timeCurr).Year;
 		foreach (SchedulePeriod item in PeriodsAvailable)
 		{
-			if (timeCurr >= item.DateStart && timeCurr <= item.DateEnd)
+			DateTime start = new DateTime(item.DateStart);
+			DateTime end = new DateTime(item.DateEnd);
+			if (end.Ticks - start.Ticks >= TimeSpan.TicksPerDay * 365)
 			{
-				return true;
+				if (timeCurr >= item.DateStart && timeCurr <= item.DateEnd)
+				{
+					return true;
+				}
+				continue;
+			}
+			// Dated periods (holidays, monthly gifts) were authored for 2023-24 only; repeat them every year.
+			// Checking last year's shift too covers periods that wrap past New Year.
+			for (int back = 0; back <= 1; back++)
+			{
+				int years = yearCurr - start.Year - back;
+				if (timeCurr >= start.AddYears(years).Ticks && timeCurr <= end.AddYears(years).Ticks)
+				{
+					return true;
+				}
 			}
 		}
 		return false;
