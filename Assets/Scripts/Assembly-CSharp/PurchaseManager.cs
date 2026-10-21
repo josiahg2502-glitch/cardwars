@@ -112,9 +112,9 @@ public class PurchaseManager : Singleton<PurchaseManager>
 
 	private IPurchaseListener m_Listener;
 
-	public static string CHECK_CLIENT_VERSION_URL = "http://cardwars.retroretreat.net/DomoJump/IAPReceiptVerificationServer/check_client_version.php";
+	public static string CHECK_CLIENT_VERSION_URL = "";
 
-	public static string CHECK_ASSET_DOWNLOADS_URL = "http://cardwars.retroretreat.net/DomoJump/IAPReceiptVerificationServer/check_asset_downloads.php";
+	public static string CHECK_ASSET_DOWNLOADS_URL = "";
 
 	private List<DbProductInfo> storeItems;
 
@@ -154,7 +154,7 @@ public class PurchaseManager : Singleton<PurchaseManager>
 	{
 		get
 		{
-			return "http://cardwars.retroretreat.net/AdventureTime/CardWars/IAPReceiptVerificationServer";
+			return "";
 		}
 	}
 
@@ -401,7 +401,7 @@ public class PurchaseManager : Singleton<PurchaseManager>
 		{
 			return dbProductInfo.productType;
 		}
-		return string.Empty;
+		return "";
 	}
 
 	public int GetGemCountForProductID(string productID)

@@ -800,7 +800,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
 	{
 		deviceId = SystemInfo.deviceUniqueIdentifier;
 		deviceInfo = string.Format("{0} {1} {2}", SystemInfo.deviceModel, SystemInfo.processorType, SystemInfo.operatingSystem);
-		KontagentApiKey = "8e16a5d014e04bb1b77be06a22ac537c";
+		KontagentApiKey = "";
 		if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
 		}
