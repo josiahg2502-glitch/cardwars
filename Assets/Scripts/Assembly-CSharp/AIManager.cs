@@ -92,6 +92,8 @@ public class AIManager
 
 	public AIDecision MakeDecision()
 	{
+		// GameState is recreated on app reload (e.g. after login); a cached lane list would point at the old, empty board
+		Lanes = GameState.Instance.GetLanes(PlayerType.Opponent);
 		DecisionList.Clear();
 		ConsiderCards();
 		ConsiderAbilities();
