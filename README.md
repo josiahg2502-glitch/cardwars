@@ -24,6 +24,8 @@ It's CARD WARS!
 * Mac Version - Coming Soon
 * Linux Version - Coming Soon
 
+The bundled updater (`CardWars.exe` in the top folder) contacts a server that no longer exists and crashes. Launch `game\CardWars.exe` directly instead.
+
 ## Images
 ![CardWars_r8d9H393Tp](https://i.imgur.com/cXUolY0.jpg)
 ![CardWars_F7nDRbIxel](https://i.imgur.com/N3BH326.jpg)
